@@ -3,6 +3,8 @@ package by.tms.d_project.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.UUID;
 //import org.hibernate.annotations.Fetch;
 //import org.hibernate.annotations.FetchMode;
 
@@ -16,7 +18,7 @@ import lombok.ToString;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
