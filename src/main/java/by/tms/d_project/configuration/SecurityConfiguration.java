@@ -39,22 +39,17 @@ public class SecurityConfiguration {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(c ->
-                        c.requestMatchers(HttpMethod.POST, "/account", "/auth/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**",
-                                        "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .exceptionHandling(c ->
-                        c.authenticationEntryPoint(authenticationEntryPoint()))
-                .sessionManagement(c ->
-                        c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+                .authorizeHttpRequests(c -> c.requestMatchers(HttpMethod.POST, "/account", "/auth/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .anyRequest().authenticated())
+                .exceptionHandling(c -> c.authenticationEntryPoint(authenticationEntryPoint()))
+                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
-    record AuthResponse(String message) {}
+    record AuthResponse(String message) {
+    }
 
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {

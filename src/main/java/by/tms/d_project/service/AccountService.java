@@ -28,6 +28,10 @@ public class AccountService implements UserDetailsService {
         return account;
     }
 
+    public void delete(String username) {
+        accountRepository.deleteByUsername(username);
+    }
+
     public Account checkAccount(String username) {
         Optional<Account> account = accountRepository.findByUsername(username);
         if (account.isPresent()) {
@@ -38,7 +42,7 @@ public class AccountService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         Optional<Account> account = accountRepository.findByUsername(username);
         if (account.isPresent()) {
             var acc = account.get();
@@ -47,7 +51,8 @@ public class AccountService implements UserDetailsService {
                     .password(acc.getPassword())
                     .roles("USER")
                     .build();
+        } else {
+            throw new UsernameNotFoundException(username);
         }
-        throw new UsernameNotFoundException(username);
     }
 }

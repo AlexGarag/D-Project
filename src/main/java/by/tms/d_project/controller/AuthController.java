@@ -2,6 +2,7 @@ package by.tms.d_project.controller;
 
 import by.tms.d_project.dto.AuthRequestDto;
 import by.tms.d_project.utils.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
+    @Autowired
     public AuthController(JwtUtil jwtUtil, AuthenticationManager authenticationManager) {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;

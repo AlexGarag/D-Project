@@ -4,11 +4,9 @@ import by.tms.d_project.entity.Creek;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
-public interface CreekRepository extends JpaRepository<Creek, UUID> {
+public interface CreekRepository extends JpaRepository<Creek, String> {
+    Optional<Creek> findById(String id);
 
-    Optional<Creek> findById(UUID id);
-
-//    List<Issue> findByProjectId(Long projectId);
+    void deleteById(String id);
 }
