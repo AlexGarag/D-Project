@@ -18,4 +18,6 @@ public class Shaft {
     private String idPrinting;
     @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
+    private int type;
 }
