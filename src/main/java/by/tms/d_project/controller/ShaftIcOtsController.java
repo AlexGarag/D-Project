@@ -2,7 +2,9 @@ package by.tms.d_project.controller;
 
 //import by.tms.d_project.dto.AccountDto;
 import by.tms.d_project.entity.ShaftIcOts;
+import by.tms.d_project.entity.ShaftOts;
 import by.tms.d_project.service.ShaftIcOtsService;
+import by.tms.d_project.utils.Ots;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,19 +19,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/shafticots")
 public class ShaftIcOtsController {
     private final ShaftIcOtsService shaftIcOtsService;
+    private final Ots ots;
     private static final Logger log = LoggerFactory.getLogger(ShaftIcOtsController.class);
 
     @Autowired
-    public ShaftIcOtsController(ShaftIcOtsService shaftIcOtsService) { this.shaftIcOtsService = shaftIcOtsService; }
+    public ShaftIcOtsController(ShaftIcOtsService shaftIcOtsService,
+                                Ots ots) {
+        this.shaftIcOtsService = shaftIcOtsService;
+        this.ots = ots;
+    }
 
     @Operation(summary = "creating an ShaftIcOts")
     @PostMapping()
-    public ResponseEntity<ShaftIcOts> create(@RequestBody ShaftIcOts shaftIcOts) {
+    public ResponseEntity<ShaftOts> create(@RequestBody ShaftIcOts shaftIcOts) {
         log.info("Creating an shaftIcOts for \'{}\'", shaftIcOts.getTitlePrinting());
-        ShaftIcOts saved = shaftIcOtsService.create(shaftIcOts);
-//        AccountDto accountDto = new AccountDto();
+        //        AccountDto accountDto = new AccountDto();
 //        accountDto.setUsername(account.getUsername());
 //        accountDto.setCreatedAt(account.getCreatedAt());
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        ShaftIcOts saved = shaftIcOtsService.create(shaftIcOts);
+        ShaftOts shaftOts = ots.makeOts(saved);
+        return new ResponseEntity<>(shaftOts, HttpStatus.CREATED);
     }
 }
