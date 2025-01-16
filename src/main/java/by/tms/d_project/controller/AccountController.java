@@ -26,7 +26,7 @@ public class AccountController {
     @PostMapping()
     public ResponseEntity<AccountDto> create(@RequestBody Account account) {
         log.info("Creating an account \'{}\'", account.getUsername());
-        /*var saved = */accountService.create(account);
+        accountService.create(account);
         AccountDto accountDto = new AccountDto();
         accountDto.setUsername(account.getUsername());
         accountDto.setCreatedAt(account.getCreatedAt());
