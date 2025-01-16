@@ -7,26 +7,21 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data
 @ToString
-@Table(name = "shafts_ic_ots")
-public class ShaftIcOts {
+@Table(name = "shaft_ic_ots")
+public class ShaftIcOts { // Ic - initial conditions, Ots - one-time solution
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id = 0L;
     @Column(name = "title_printing", nullable = false)
     private String titlePrinting;
     @Column(name = "type_shaft", nullable = false)
     private int typeShaft;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
     private List<FormIcOts> formsIcOts = new ArrayList<>();
-
-    @ManyToOne
-    private Account creator;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
     private Date createdAt = new Date();

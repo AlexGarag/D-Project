@@ -1,7 +1,6 @@
 package by.tms.d_project.repository;
 
 import by.tms.d_project.entity.Account;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,5 +1,6 @@
 package by.tms.d_project.controller;
 
+import by.tms.d_project.dto.AccountDto;
 import by.tms.d_project.entity.Account;
 import by.tms.d_project.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-//import java.util.logging.Logger;
-
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -25,20 +24,23 @@ public class AccountController {
 
     @Operation(summary = "creating an account")
     @PostMapping()
-    public ResponseEntity<Account> create(@RequestBody Account account) {
+    public ResponseEntity<AccountDto> create(@RequestBody Account account) {
         log.info("Creating an account \'{}\'", account.getUsername());
-        var saved = accountService.create(account);
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+        /*var saved = */accountService.create(account);
+        AccountDto accountDto = new AccountDto();
+        accountDto.setUsername(account.getUsername());
+        accountDto.setCreatedAt(account.getCreatedAt());
+        return new ResponseEntity<>(accountDto, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "deleting an account with a username")
+//    @Operation(summary = "deleting an account with a username")
 //    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{username}")
-    public ResponseEntity<?> deleteByUsername(@PathVariable("username") String username/*, Authentication authentication*/) {
+//    @DeleteMapping("/{username}")
+//    public ResponseEntity<?> deleteByUsername(@PathVariable("username") String username, Authentication authentication) {
 //        String username = authentication.getName();
 //        Account account = accountService.checkAccount(username);
-        log.info("Deleting an account \'{}\'", username);
-        accountService.delete(username);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//        log.info("Deleting an account \'{}\'", username);
+//        accountService.delete(username);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }

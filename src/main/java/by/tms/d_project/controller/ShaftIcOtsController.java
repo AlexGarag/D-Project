@@ -1,39 +1,35 @@
 package by.tms.d_project.controller;
 
-import by.tms.d_project.entity.Account;
+//import by.tms.d_project.dto.AccountDto;
 import by.tms.d_project.entity.ShaftIcOts;
-import by.tms.d_project.dto.ShaftIcOtsDto;
-import by.tms.d_project.service.AccountService;
 import by.tms.d_project.service.ShaftIcOtsService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/shafticots")
 public class ShaftIcOtsController {
     private final ShaftIcOtsService shaftIcOtsService;
-    private final AccountService accountService;
+    private static final Logger log = LoggerFactory.getLogger(ShaftIcOtsController.class);
 
     @Autowired
-    public ShaftIcOtsController(ShaftIcOtsService shaftIcOtsService,
-                                AccountService accountService) {
-        this.shaftIcOtsService = shaftIcOtsService;
-        this.accountService = accountService;
-    }
+    public ShaftIcOtsController(ShaftIcOtsService shaftIcOtsService) { this.shaftIcOtsService = shaftIcOtsService; }
 
-    @Operation(summary = "setting the initial conditions for the shaft")
-    @PostMapping
-    public ResponseEntity<ShaftIcOts> create(@RequestBody ShaftIcOtsDto shaftIcOtsDto, Authentication authentication) {
-        String username = authentication.getName();
-        Account creator = accountService.checkAccount(username);
-        ShaftIcOts saved = shaftIcOtsService.create(shaftIcOtsDto, creator);
+    @Operation(summary = "creating an ShaftIcOts")
+    @PostMapping()
+    public ResponseEntity<ShaftIcOts> create(@RequestBody ShaftIcOts shaftIcOts) {
+        log.info("Creating an shaftIcOts for \'{}\'", shaftIcOts.getTitlePrinting());
+        ShaftIcOts saved = shaftIcOtsService.create(shaftIcOts);
+//        AccountDto accountDto = new AccountDto();
+//        accountDto.setUsername(account.getUsername());
+//        accountDto.setCreatedAt(account.getCreatedAt());
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 }

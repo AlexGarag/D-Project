@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Service
 public class AccountService implements UserDetailsService {
-
     private final AccountRepository accountRepository;
 
     public AccountService(AccountRepository accountRepository) {
