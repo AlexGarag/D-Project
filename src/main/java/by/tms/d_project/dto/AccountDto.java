@@ -7,5 +7,5 @@ import java.util.Date;
 @Data
 public class AccountDto {
     private String username;
-    private Date createdAt;
+//    private Date createdAt;
 }

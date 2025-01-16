@@ -1,5 +1,6 @@
 package by.tms.d_project.entity;
 
+import by.tms.d_project.dto.AccountDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString
+//@ToString
 @Table(name = "shaft_ots")
 public class ShaftOts { // Ots - one-time solution
     @Id
@@ -22,6 +23,8 @@ public class ShaftOts { // Ots - one-time solution
     private int typeShaft;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", orphanRemoval = true)
     private List<FormOts> formsOts = new ArrayList<>();
+    @ManyToOne
+    private Account creator;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
     private Date createdAt = new Date();

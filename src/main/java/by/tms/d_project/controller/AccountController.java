@@ -29,7 +29,7 @@ public class AccountController {
         accountService.create(account);
         AccountDto accountDto = new AccountDto();
         accountDto.setUsername(account.getUsername());
-        accountDto.setCreatedAt(account.getCreatedAt());
+//        accountDto.setCreatedAt(account.getCreatedAt());
         return new ResponseEntity<>(accountDto, HttpStatus.CREATED);
     }
 
