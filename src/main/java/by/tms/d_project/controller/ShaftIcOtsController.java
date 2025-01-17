@@ -3,7 +3,6 @@ package by.tms.d_project.controller;
 import by.tms.d_project.dto.ShaftDto;
 import by.tms.d_project.entity.Account;
 import by.tms.d_project.entity.ShaftIcOts;
-import by.tms.d_project.entity.ShaftOts;
 import by.tms.d_project.service.AccountService;
 import by.tms.d_project.service.ShaftIcOtsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,13 +31,10 @@ public class ShaftIcOtsController {
     @Operation(summary = "creating an ShaftIcOts")
     @PostMapping()
     public ResponseEntity<ShaftDto> create(@RequestBody ShaftIcOts shaftIcOts, Authentication authentication) {
-//    public ResponseEntity<ShaftOts> create(@RequestBody ShaftIcOts shaftIcOts, Authentication authentication) {
         String username = authentication.getName();
         log.info("Creating an shaftIcOts for \'{}\' by \'{}\'", shaftIcOts.getTitlePrinting(), username);
         Account account = accountService.checkAccount(username);
-//        ShaftDto shaftOts = shaftIcOtsService.create(shaftIcOts, account);
         ShaftDto shaftDto = shaftIcOtsService.create(shaftIcOts, account);
-//        return new ResponseEntity<>(shaftOts, HttpStatus.CREATED);
         return new ResponseEntity<>(shaftDto, HttpStatus.CREATED);
     }
 }
