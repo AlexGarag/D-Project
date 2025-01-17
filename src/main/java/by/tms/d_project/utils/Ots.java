@@ -34,6 +34,7 @@ public class Ots {
 
     private FormOts makeOtsForm(FormIcOts formIcOts, int numberOnShaft) {
         FormOts formOts = new FormOts();
+        formOts.setTitleForm(formIcOts.getTitleForm());
         formOts.setNumberOnShaft(numberOnShaft);
         formOts.setIndentationOnShaft(formIcOts.getRightMargin() + margin);
         margin = margin + formIcOts.getWidth();

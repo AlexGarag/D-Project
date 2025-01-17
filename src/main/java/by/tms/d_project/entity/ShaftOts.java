@@ -1,9 +1,7 @@
 package by.tms.d_project.entity;
 
-import by.tms.d_project.dto.AccountDto;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Data
-//@ToString
 @Table(name = "shaft_ots")
 public class ShaftOts { // Ots - one-time solution
     @Id
@@ -28,6 +25,4 @@ public class ShaftOts { // Ots - one-time solution
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at")
     private Date createdAt = new Date();
-
-
 }

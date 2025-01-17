@@ -6,12 +6,14 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "forms_ots")
-public class FormOts {
+public class FormOts {  // todo добавить зуб
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "number_on_shaft")
     private int numberOnShaft;
+    @Column(name = "title_form")
+    private String titleForm;
     @Column(name = "indentation_on_shaft")
     private int indentationOnShaft;
     @Column(name = "interval_labels")
