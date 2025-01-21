@@ -11,20 +11,21 @@ import org.springframework.stereotype.Component;
  * Ots - one-time solution
  */
 @Component
-public class Ots {
+public class SolverOts {
     private final int lengthShaft = 1270;  // todo сделать глобальной
-    private int widthShapesShaft = 0;
-    private int margin = 0;
+//    private int widthShapesShaft;
+//    private int margin;
 
     public ShaftOts makeOts(ShaftIcOts shaftIcOts) {    // todo добавить верификации заданных параметров
         ShaftOts shaftOts = new ShaftOts();
         shaftOts.setTitlePrinting(shaftIcOts.getTitlePrinting());
         shaftOts.setTypeShaft(shaftIcOts.getTypeShaft());
         shaftOts.setCreator(shaftIcOts.getCreator());
+        int widthShapesShaft = 0;
         for (FormIcOts formIcOts : shaftIcOts.getFormsIcOts()) {
             widthShapesShaft = widthShapesShaft + formIcOts.getWidth();
         }
-        margin = (lengthShaft - widthShapesShaft) / 2;
+        int margin = (lengthShaft - widthShapesShaft) / 2;
         for (int numberOnShaft = shaftIcOts.getFormsIcOts().size() - 1; numberOnShaft > -1; numberOnShaft --) {
             FormOts formOts = makeOtsForm(shaftIcOts.getFormsIcOts().get(numberOnShaft), numberOnShaft + 1);
             shaftOts.getFormsOts().add(formOts);
@@ -36,6 +37,7 @@ public class Ots {
         FormOts formOts = new FormOts();
         formOts.setTitleForm(formIcOts.getTitleForm());
         formOts.setNumberOnShaft(numberOnShaft);
+        int margin = 0;
         formOts.setIndentationOnShaft(formIcOts.getRightMargin() + margin);
         margin = margin + formIcOts.getWidth();
         formOts.setIntervalLabels(formIcOts.getIntervalLabels());

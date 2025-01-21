@@ -9,11 +9,11 @@ import javax.xml.crypto.Data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OtsTest {
+class SolverOtsTest {
 
     @Test
     void makeOts() {
-        Ots ots = new Ots();
+        SolverOts solverOts = new SolverOts();
         String jsonIcOts =
                 "{\n" +
                 "    \"titlePrinting\": \"34971t\",\n" +
@@ -63,7 +63,7 @@ class OtsTest {
                         "}";
         ShaftOts testOts = (ShaftOts) new Gson().fromJson(jsonOts, Data.class);
 
-        ShaftOts result = ots.makeOts(testIcOts);
+        ShaftOts result = solverOts.makeOts(testIcOts);
         assertEquals(testOts, result);
     }
 }

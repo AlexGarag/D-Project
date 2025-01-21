@@ -4,33 +4,33 @@ import by.tms.d_project.dto.FormDto;
 import by.tms.d_project.dto.ShaftDto;
 import by.tms.d_project.entity.*;
 import by.tms.d_project.repository.ShaftIcOtsRepository;
-import by.tms.d_project.repository.ShaftOtsRepository;
-import by.tms.d_project.utils.Ots;
+import by.tms.d_project.repository.OtsRepository;
+import by.tms.d_project.utils.SolverOts;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShaftIcOtsService {
+public class OtsService {
     private final ShaftIcOtsRepository shaftIcOtsRepository;
-    private final ShaftOtsRepository shaftOtsRepository;
-    private final Ots ots;
-    private static final Logger log = LoggerFactory.getLogger(ShaftIcOtsService.class);
+    private final OtsRepository otsRepository;
+    private final SolverOts solverOts;
+    private static final Logger log = LoggerFactory.getLogger(OtsService.class);
 
-    public ShaftIcOtsService(ShaftIcOtsRepository shaftIcOtsRepository,
-                             ShaftOtsRepository shaftOtsRepository,
-                             Ots ots) {
+    public OtsService(ShaftIcOtsRepository shaftIcOtsRepository,
+                      OtsRepository otsRepository,
+                      SolverOts solverOts) {
         this.shaftIcOtsRepository = shaftIcOtsRepository;
-        this.shaftOtsRepository = shaftOtsRepository;
-        this.ots = ots;
+        this.otsRepository = otsRepository;
+        this.solverOts = solverOts;
     }
 
     @Transactional
     public ShaftDto create(ShaftIcOts shaftIcOts, Account account) {
         shaftIcOts.setCreator(account);
         shaftIcOtsRepository.save(shaftIcOts);
-        ShaftOts shaftOts = ots.makeOts(shaftIcOts);
+        ShaftOts shaftOts = solverOts.makeOts(shaftIcOts);
         ShaftDto shaftDto = makeShaftDto(shaftOts);
         for (FormIcOts formIcOts : shaftIcOts.getFormsIcOts()) {
             formIcOts.setOwner(shaftIcOts);
@@ -41,7 +41,7 @@ public class ShaftIcOtsService {
         }
         log.info("A one-time solution was obtained for \'{}\' by \'{}\'", shaftIcOts.getTitlePrinting(),
                 shaftOts.getCreator().getUsername());
-        shaftOtsRepository.save(shaftOts);
+        otsRepository.save(shaftOts);
         return shaftDto;
     }
 
