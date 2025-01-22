@@ -1,7 +1,7 @@
 package by.tms.d_project.controller;
 
-import by.tms.d_project.dto.AccountByIdDto;
 import by.tms.d_project.dto.AccountDto;
+import by.tms.d_project.dto.AccountShortDto;
 import by.tms.d_project.entity.Account;
 import by.tms.d_project.service.AccountService;
 import by.tms.d_project.utils.CheckerRights;
@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static by.tms.d_project.Constant.NO_RIGHTS_MESSAGE;
+import static by.tms.d_project.Constant.*;
 
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/account")
 public class AccountController {
     private final AccountService accountService;
     private final CheckerRights checkerRights;
     private static final Logger log = LoggerFactory.getLogger(AccountController.class);
-    private static final String NOT_FOUND_MESSAGE = "Account not found";
-    private static final String DELETED_MESSAGE = "Account deleted";
 
     @Autowired
     public AccountController(AccountService accountService,
@@ -36,11 +34,11 @@ public class AccountController {
 
     @Operation(summary = "creating an account")
     @PostMapping()
-    public ResponseEntity<AccountDto> create(@RequestBody Account account) {
+    public ResponseEntity<AccountShortDto> create(@RequestBody Account account) {
         accountService.create(account);
-        AccountDto accountDto = new AccountDto();
-        accountDto.setUsername(account.getUsername());
-        return new ResponseEntity<>(accountDto, HttpStatus.CREATED);
+        AccountShortDto accountShortDto = new AccountShortDto();
+        accountShortDto.setUsername(account.getUsername());
+        return new ResponseEntity<>(accountShortDto, HttpStatus.CREATED);
     }
 
     @Operation(summary = "getting an account")
@@ -49,10 +47,10 @@ public class AccountController {
         Optional<Account> optionalAccount = accountService.getAccountByUsername(username);
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
-            AccountByIdDto accountByIdDto = new AccountByIdDto();
-            accountByIdDto.setId(account.getId());
-            accountByIdDto.setUsername(account.getUsername());
-            return ResponseEntity.status(HttpStatus.OK).body(accountByIdDto);
+            AccountDto accountDto = new AccountDto();
+            accountDto.setId(account.getId());
+            accountDto.setUsername(account.getUsername());
+            return ResponseEntity.status(HttpStatus.OK).body(accountDto);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND_MESSAGE);
         }
@@ -68,8 +66,8 @@ public class AccountController {
             Optional<Account> optionalAccount = accountService.getAccountByUsername(username);
             if (optionalAccount.isPresent()) {
                 Account oldAccount = optionalAccount.get();
-                AccountDto accountDto = accountService.update(oldAccount, newAccount);
-                return ResponseEntity.status(HttpStatus.OK).body(accountDto);
+                AccountShortDto accountShortDto = accountService.update(oldAccount, newAccount);
+                return ResponseEntity.status(HttpStatus.OK).body(accountShortDto);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND_MESSAGE);
             }

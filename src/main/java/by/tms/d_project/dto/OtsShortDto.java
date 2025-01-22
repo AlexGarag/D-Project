@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ShaftDto {
+public class OtsShortDto {
     private String titlePrinting;
-    private int typeShaft;
+    private int shaftType;
     private List<FormDto> formsDto = new ArrayList<>();
     private String author;
 }

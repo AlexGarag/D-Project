@@ -2,7 +2,7 @@ package by.tms.d_project.service;
 
 import by.tms.d_project.controller.AccountController;
 import by.tms.d_project.dao.AccountDao;
-import by.tms.d_project.dto.AccountDto;
+import by.tms.d_project.dto.AccountShortDto;
 import by.tms.d_project.entity.Account;
 import by.tms.d_project.repository.AccountRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -43,14 +43,14 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findByUsername(username);
     }
 
-    public AccountDto update(Account oldAccount, Account newAccount) {
+    public AccountShortDto update(Account oldAccount, Account newAccount) {
         oldAccount.setUsername(newAccount.getUsername());
         oldAccount.setPassword(new BCryptPasswordEncoder(11).encode(newAccount.getPassword()));
         accountRepository.save(oldAccount);
         log.info("Updating an account \'{}\' to \'{}\'", oldAccount.getUsername(), newAccount.getUsername());
-        AccountDto accountDto = new AccountDto();
-        accountDto.setUsername(newAccount.getUsername());
-        return accountDto;
+        AccountShortDto accountShortDto = new AccountShortDto();
+        accountShortDto.setUsername(newAccount.getUsername());
+        return accountShortDto;
     }
 
 //    public void delete(String username, String actorUsername) {
