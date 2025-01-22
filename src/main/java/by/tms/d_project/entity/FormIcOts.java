@@ -23,5 +23,5 @@ public class FormIcOts {
     private int intervalLabels;
 
     @ManyToOne
-    private ShaftIcOts owner;
+    private IcOts owner;
 }

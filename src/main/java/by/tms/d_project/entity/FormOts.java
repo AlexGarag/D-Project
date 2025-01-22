@@ -22,5 +22,5 @@ public class FormOts {  // todo добавить зуб
     private int toothOnShaft;
 
     @ManyToOne
-    private ShaftOts owner;
+    private Ots owner;
 }

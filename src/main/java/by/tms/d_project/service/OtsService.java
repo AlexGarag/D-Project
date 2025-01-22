@@ -3,7 +3,7 @@ package by.tms.d_project.service;
 import by.tms.d_project.dto.FormDto;
 import by.tms.d_project.dto.ShaftDto;
 import by.tms.d_project.entity.*;
-import by.tms.d_project.repository.ShaftIcOtsRepository;
+import by.tms.d_project.repository.IcOtsRepository;
 import by.tms.d_project.repository.OtsRepository;
 import by.tms.d_project.utils.SolverOts;
 import jakarta.transaction.Transactional;
@@ -13,44 +13,44 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OtsService {
-    private final ShaftIcOtsRepository shaftIcOtsRepository;
+    private final IcOtsRepository icOtsRepository;
     private final OtsRepository otsRepository;
     private final SolverOts solverOts;
     private static final Logger log = LoggerFactory.getLogger(OtsService.class);
 
-    public OtsService(ShaftIcOtsRepository shaftIcOtsRepository,
+    public OtsService(IcOtsRepository icOtsRepository,
                       OtsRepository otsRepository,
                       SolverOts solverOts) {
-        this.shaftIcOtsRepository = shaftIcOtsRepository;
+        this.icOtsRepository = icOtsRepository;
         this.otsRepository = otsRepository;
         this.solverOts = solverOts;
     }
 
     @Transactional
-    public ShaftDto create(ShaftIcOts shaftIcOts, Account account) {
-        shaftIcOts.setCreator(account);
-        shaftIcOtsRepository.save(shaftIcOts);
-        ShaftOts shaftOts = solverOts.makeOts(shaftIcOts);
-        ShaftDto shaftDto = makeShaftDto(shaftOts);
-        for (FormIcOts formIcOts : shaftIcOts.getFormsIcOts()) {
-            formIcOts.setOwner(shaftIcOts);
+    public ShaftDto create(IcOts icOts, Account account) {
+        icOts.setAuthor(account);
+        icOtsRepository.save(icOts);
+        Ots ots = solverOts.makeOts(icOts);
+        ShaftDto shaftDto = makeShaftDto(ots);
+        for (FormIcOts formIcOts : icOts.getFormsIcOts()) {
+            formIcOts.setOwner(icOts);
         }
-        shaftIcOtsRepository.save(shaftIcOts);
-        for (FormOts formOts : shaftOts.getFormsOts()) {
-            formOts.setOwner(shaftOts);
+        icOtsRepository.save(icOts);
+        for (FormOts formOts : ots.getFormsOts()) {
+            formOts.setOwner(ots);
         }
-        log.info("A one-time solution was obtained for \'{}\' by \'{}\'", shaftIcOts.getTitlePrinting(),
-                shaftOts.getCreator().getUsername());
-        otsRepository.save(shaftOts);
+        log.info("A one-time solution was obtained for \'{}\' by \'{}\'", icOts.getTitlePrinting(),
+                ots.getAuthor().getUsername());
+        otsRepository.save(ots);
         return shaftDto;
     }
 
-    private ShaftDto makeShaftDto(ShaftOts shaftOts) {
+    private ShaftDto makeShaftDto(Ots ots) {
         ShaftDto shaftDto = new ShaftDto();
-        shaftDto.setTitlePrinting(shaftOts.getTitlePrinting());
-        shaftDto.setTypeShaft(shaftOts.getTypeShaft());
-        shaftDto.setCreator(shaftOts.getCreator().getUsername());
-        for (FormOts formOts : shaftOts.getFormsOts()) {
+        shaftDto.setTitlePrinting(ots.getTitlePrinting());
+        shaftDto.setTypeShaft(ots.getShaftType());
+        shaftDto.setAuthor(ots.getAuthor().getUsername());
+        for (FormOts formOts : ots.getFormsOts()) {
             FormDto formDto = makeFormDto(formOts);
             shaftDto.getFormsDto().add(formDto);
         }

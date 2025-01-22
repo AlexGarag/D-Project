@@ -2,8 +2,8 @@ package by.tms.d_project.utils;
 
 import by.tms.d_project.entity.FormIcOts;
 import by.tms.d_project.entity.FormOts;
-import by.tms.d_project.entity.ShaftIcOts;
-import by.tms.d_project.entity.ShaftOts;
+import by.tms.d_project.entity.IcOts;
+import by.tms.d_project.entity.Ots;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,21 +16,21 @@ public class SolverOts {
 //    private int widthShapesShaft;
 //    private int margin;
 
-    public ShaftOts makeOts(ShaftIcOts shaftIcOts) {    // todo добавить верификации заданных параметров
-        ShaftOts shaftOts = new ShaftOts();
-        shaftOts.setTitlePrinting(shaftIcOts.getTitlePrinting());
-        shaftOts.setTypeShaft(shaftIcOts.getTypeShaft());
-        shaftOts.setCreator(shaftIcOts.getCreator());
+    public Ots makeOts(IcOts icOts) {    // todo добавить верификации заданных параметров
+        Ots ots = new Ots();
+        ots.setTitlePrinting(icOts.getTitlePrinting());
+        ots.setShaftType(icOts.getTypeShaft());
+        ots.setAuthor(icOts.getAuthor());
         int widthShapesShaft = 0;
-        for (FormIcOts formIcOts : shaftIcOts.getFormsIcOts()) {
+        for (FormIcOts formIcOts : icOts.getFormsIcOts()) {
             widthShapesShaft = widthShapesShaft + formIcOts.getWidth();
         }
         int margin = (lengthShaft - widthShapesShaft) / 2;
-        for (int numberOnShaft = shaftIcOts.getFormsIcOts().size() - 1; numberOnShaft > -1; numberOnShaft --) {
-            FormOts formOts = makeOtsForm(shaftIcOts.getFormsIcOts().get(numberOnShaft), numberOnShaft + 1);
-            shaftOts.getFormsOts().add(formOts);
+        for (int numberOnShaft = icOts.getFormsIcOts().size() - 1; numberOnShaft > -1; numberOnShaft --) {
+            FormOts formOts = makeOtsForm(icOts.getFormsIcOts().get(numberOnShaft), numberOnShaft + 1);
+            ots.getFormsOts().add(formOts);
         }
-        return shaftOts;
+        return ots;
     }
 
     private FormOts makeOtsForm(FormIcOts formIcOts, int numberOnShaft) {

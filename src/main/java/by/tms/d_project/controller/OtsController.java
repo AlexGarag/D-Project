@@ -2,7 +2,7 @@ package by.tms.d_project.controller;
 
 import by.tms.d_project.dto.ShaftDto;
 import by.tms.d_project.entity.Account;
-import by.tms.d_project.entity.ShaftIcOts;
+import by.tms.d_project.entity.IcOts;
 import by.tms.d_project.service.AccountService;
 import by.tms.d_project.service.OtsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,11 +30,11 @@ public class OtsController {
 
     @Operation(summary = "creating an Ots")
     @PostMapping()
-    public ResponseEntity<ShaftDto> create(@RequestBody ShaftIcOts shaftIcOts, Authentication authentication) {
+    public ResponseEntity<ShaftDto> create(@RequestBody IcOts icOts, Authentication authentication) {
         String username = authentication.getName();
-        log.info("Creating an Ots for \'{}\' by \'{}\'", shaftIcOts.getTitlePrinting(), username);
+        log.info("Creating an Ots for \'{}\' by \'{}\'", icOts.getTitlePrinting(), username);
         Account account = accountService.checkAccount(username);
-        ShaftDto shaftDto = otsService.create(shaftIcOts, account);
+        ShaftDto shaftDto = otsService.create(icOts, account);
         return new ResponseEntity<>(shaftDto, HttpStatus.CREATED);
     }
 }

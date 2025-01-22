@@ -1,7 +1,7 @@
 package by.tms.d_project.utils;
 
-import by.tms.d_project.entity.ShaftIcOts;
-import by.tms.d_project.entity.ShaftOts;
+import by.tms.d_project.entity.IcOts;
+import by.tms.d_project.entity.Ots;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +35,7 @@ class SolverOtsTest {
                 "        }\n" +
                 "    ]\n" +
                 "}";
-        ShaftIcOts testIcOts = (ShaftIcOts) new Gson().fromJson(jsonIcOts, Data.class);
+        IcOts testIcOts = (IcOts) new Gson().fromJson(jsonIcOts, Data.class);
         String jsonOts =
                 "{\n" +
                         "    \"id\": 0,\n" +
@@ -61,9 +61,9 @@ class SolverOtsTest {
                         "    ],\n" +
                         "    \"createdAt\": \"null\"\n" +
                         "}";
-        ShaftOts testOts = (ShaftOts) new Gson().fromJson(jsonOts, Data.class);
+        Ots testOts = (Ots) new Gson().fromJson(jsonOts, Data.class);
 
-        ShaftOts result = solverOts.makeOts(testIcOts);
+        Ots result = solverOts.makeOts(testIcOts);
         assertEquals(testOts, result);
     }
 }
