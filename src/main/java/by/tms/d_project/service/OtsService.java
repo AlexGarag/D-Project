@@ -72,7 +72,7 @@ public class OtsService {
         log.info("Deleting an Ots \'{}\' by \'{}\'", titlePrinting, actorUsername);
     }
 
-    // todo продолжить!
+    // todo   продолжить!
     public OtsShortDto find(String titlePrinting, String usernameActor) {
         OtsShortDto otsShortDto = new OtsShortDto();
 
