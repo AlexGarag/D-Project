@@ -53,8 +53,9 @@ public class AccountService implements UserDetailsService {
         return accountDto;
     }
 
-//    public void delete(String username, String actorUsername) { // todo не удаляется через репозиторий! :(
-//        accountRepository.deleteByUsername(username);
+//    public void delete(String username, String actorUsername) {
+//        Optional<Account> accountOptional = accountRepository.findByUsername(username);
+//        accountOptional.ifPresent(account -> accountRepository.removeByUsername(username));
 //        log.info("Deleting an account \'{}\' by \'{}\'", username, actorUsername);
 //    }
 
