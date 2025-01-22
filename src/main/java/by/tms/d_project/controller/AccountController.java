@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static by.tms.d_project.Constant.*;
+import static by.tms.d_project.constant_and_reference.Message.*;
 
 @RestController
 @RequestMapping("/account")
