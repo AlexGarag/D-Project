@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @ToString
 @Table(name = "ic_ots")
-public class IcOts { // Ic - initial conditions, Ots - one-time solution
+public class IcOts { // Ic - initial conditions + Ots - one-time solution
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
