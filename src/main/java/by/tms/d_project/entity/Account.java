@@ -2,13 +2,15 @@ package by.tms.d_project.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
 
 @Entity
-@Data
-@ToString
+@Setter
+@Getter
 @Table(name = "accounts")
 public class Account {
     @Id

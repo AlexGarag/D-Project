@@ -36,8 +36,8 @@ public class OtsService {
     @Transactional
     public OtsShortDto create(IcOts icOts, Account account) {
         icOts.setAuthor(account);
-        log.info("Creating an Ots for \'{}\' by \'{}\'", icOts.getTitlePrinting(), account.getUsername());
         icOtsRepository.save(icOts);
+        log.info("Creating an Ots for \'{}\' by \'{}\'", icOts.getTitlePrinting(), account.getUsername());
         Ots ots = solverOts.makeOts(icOts);
         OtsShortDto otsShortDto = makeOtsDto(ots);
         for (FormIcOts formIcOts : icOts.getFormsIcOts()) {
@@ -47,9 +47,9 @@ public class OtsService {
         for (FormOts formOts : ots.getFormsOts()) {
             formOts.setOwner(ots);
         }
+        otsRepository.save(ots);
         log.info("A one-time solution was obtained for \'{}\' by \'{}\'", icOts.getTitlePrinting(),
                 ots.getAuthor().getUsername());
-        otsRepository.save(ots);
         return otsShortDto;
     }
 

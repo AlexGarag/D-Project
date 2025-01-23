@@ -2,11 +2,13 @@ package by.tms.d_project.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Data
-@ToString
+@Setter
+@Getter
 @Table(name = "forms_ic_ots")
 public class FormIcOts {
     @Id

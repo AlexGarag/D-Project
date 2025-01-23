@@ -2,6 +2,8 @@ package by.tms.d_project.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -9,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
-@ToString
+@Setter
+@Getter
 @Table(name = "ic_ots")
 public class IcOts { // Ic - initial conditions + Ots - one-time solution
     @Id
