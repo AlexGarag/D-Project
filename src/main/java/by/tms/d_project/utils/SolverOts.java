@@ -6,7 +6,7 @@ import by.tms.d_project.entity.IcOts;
 import by.tms.d_project.entity.Ots;
 import org.springframework.stereotype.Component;
 
-import static by.tms.d_project.constant_and_reference.Constant.LENGTH_SHAFT;
+import static by.tms.d_project.constant_reference_etc.Constant.LENGTH_SHAFT;
 
 /**
  * Класс создаёт "Разовое решение" на вал по параметрам, заданным в ShaftIcOts

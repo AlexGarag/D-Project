@@ -1,4 +1,4 @@
-package by.tms.d_project.constant_and_reference;
+package by.tms.d_project.constant_reference_etc;
 
 public class Message {
     public static final String NO_RIGHTS_MESSAGE = "No rights for this action";

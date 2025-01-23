@@ -2,6 +2,7 @@ package by.tms.d_project.controller;
 
 import by.tms.d_project.dto.AuthRequestDto;
 import by.tms.d_project.utils.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,7 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
+    @Operation(summary = "account authentication")
     @PostMapping("/login")
     public String login(@RequestBody AuthRequestDto dto) {
         Authentication authentication = authenticationManager.authenticate(
