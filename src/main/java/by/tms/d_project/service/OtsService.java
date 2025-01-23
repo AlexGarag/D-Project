@@ -1,5 +1,6 @@
 package by.tms.d_project.service;
 
+import by.tms.d_project.dao.IcOtsDao;
 import by.tms.d_project.dao.OtsDao;
 import by.tms.d_project.dto.FormDto;
 import by.tms.d_project.dto.OtsShortDto;
@@ -19,16 +20,19 @@ public class OtsService {
     private final IcOtsRepository icOtsRepository;
     private final OtsRepository otsRepository;
     private final OtsDao otsDao;
+    private final IcOtsDao icOtsDao;
     private final SolverOts solverOts;
     private static final Logger log = LoggerFactory.getLogger(OtsService.class);
 
     public OtsService(IcOtsRepository icOtsRepository,
                       OtsRepository otsRepository,
                       OtsDao otsDao,
+                      IcOtsDao icOtsDao,
                       SolverOts solverOts) {
         this.icOtsRepository = icOtsRepository;
         this.otsRepository = otsRepository;
         this.otsDao = otsDao;
+        this.icOtsDao = icOtsDao;
         this.solverOts = solverOts;
     }
 
@@ -66,8 +70,10 @@ public class OtsService {
     }
 
     public void delete(String titlePrinting, String actorUsername) {
-        Optional<Ots> otsOptional = otsRepository.findByTitlePrinting(titlePrinting);
+        Optional<Ots> otsOptional = otsRepository.findByTitlePrinting(titlePrinting); // удаляю Разовое Решение
         otsOptional.ifPresent(ots -> otsDao.delete(ots.getId()));
+        Optional<IcOts> icOtsOptional = icOtsRepository.findByTitlePrinting(titlePrinting); // удаляю НУ к Разовому Решению
+        icOtsOptional.ifPresent(icOts -> icOtsDao.delete(icOts.getId()));
         log.info("Deleting an Ots \'{}\' by \'{}\'", titlePrinting, actorUsername);
     }
 
