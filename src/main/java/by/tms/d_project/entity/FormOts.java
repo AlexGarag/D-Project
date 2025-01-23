@@ -1,5 +1,7 @@
 package by.tms.d_project.entity;
 
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+//import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +24,10 @@ public class FormOts {  // todo добавить зуб
     private int intervalLabels;
     @Column(name = "tooth_on_shaft")
     private int toothOnShaft;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
+    //    @ManyToOne
+//    @JsonIgnoreProperties("formsOts")
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "owner_id", nullable = false)
+//    @JsonBackReference
     private Ots owner;
 }

@@ -1,10 +1,10 @@
 package by.tms.d_project.entity;
 
+//import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Setter
@@ -24,6 +24,10 @@ public class FormIcOts {
     @Column(name = "interval_labels")
     private int intervalLabels;
 
-    @ManyToOne
+    //    @ManyToOne
+//    @JsonIgnoreProperties("formsIcOts")
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "owner_id", nullable = false)
+//    @JsonBackReference
     private IcOts owner;
 }

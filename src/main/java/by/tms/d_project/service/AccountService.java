@@ -53,12 +53,6 @@ public class AccountService implements UserDetailsService {
         return accountShortDto;
     }
 
-//    public void delete(String username, String actorUsername) {
-//        Optional<Account> accountOptional = accountRepository.findByUsername(username);
-//        accountOptional.ifPresent(account -> accountRepository.removeByUsername(username));
-//        log.info("Deleting an account \'{}\' by \'{}\'", username, actorUsername);
-//    }
-
     public void delete(String username, String actorUsername) {
         Optional<Account> accountOptional = accountRepository.findByUsername(username);
         accountOptional.ifPresent(account -> accountDao.delete(account.getId()));

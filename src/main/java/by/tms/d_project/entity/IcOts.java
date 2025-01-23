@@ -1,10 +1,9 @@
 package by.tms.d_project.entity;
 
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +21,8 @@ public class IcOts { // Ic - initial conditions + Ots - one-time solution
     private String titlePrinting;
     @Column(name = "type_shaft", nullable = false)
     private int typeShaft;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER/*, orphanRemoval = true*/)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL/*, fetch = FetchType.LAZY*/)
+//    @JsonManagedReference
     private List<FormIcOts> formsIcOts = new ArrayList<>();
     @ManyToOne
     private Account author;
