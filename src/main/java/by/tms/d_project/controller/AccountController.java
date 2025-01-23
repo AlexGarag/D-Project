@@ -8,12 +8,15 @@ import by.tms.d_project.service.AccountService;
 import by.tms.d_project.utils.CheckerRights;
 import by.tms.d_project.utils.ResponseGenerator;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -24,6 +27,7 @@ import static by.tms.d_project.constant_reference_etc.Message.*;
 
 @RestController
 @RequestMapping("/account")
+@Tag(name = "Accounts resource")
 public class AccountController {
     private final AccountService accountService;
     private final CheckerRights checkerRights;
@@ -41,7 +45,11 @@ public class AccountController {
 
     @Operation(summary = "creating an account")
     @PostMapping()
-    public ResponseEntity<AccountShortDto> create(@RequestBody Account account) {
+    public ResponseEntity<?> create(@Valid @RequestBody Account account,
+                                                  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return responseGenerator.replay(-1);
+        }
         accountService.create(account);
         AccountShortDto accountShortDto = new AccountShortDto();
         accountShortDto.setUsername(account.getUsername());

@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import static by.tms.d_project.constant_reference_etc.HttpCode.*;
-import static by.tms.d_project.constant_reference_etc.Message.NOT_FOUND_MESSAGE;
-import static by.tms.d_project.constant_reference_etc.Message.NO_RIGHTS_MESSAGE;
+import static by.tms.d_project.constant_reference_etc.Message.*;
 
 @Component
 public class ResponseGenerator {
@@ -23,7 +22,10 @@ public class ResponseGenerator {
                 response.setCode(NOT_FOUND_CODE);
                 response.setMessage(NOT_FOUND_MESSAGE);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            default:
+                response.setCode(BAD_REQUEST_CODE);
+                response.setMessage(BAD_REQUEST_MESSAGE);
+                return ResponseEntity.status(BAD_REQUEST_CODE).body(response);
         }
-        return null;
     }
 }

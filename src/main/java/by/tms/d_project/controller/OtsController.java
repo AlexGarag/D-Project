@@ -8,6 +8,8 @@ import by.tms.d_project.service.OtsService;
 import by.tms.d_project.utils.CheckerRights;
 import by.tms.d_project.utils.ResponseGenerator;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import static by.tms.d_project.constant_reference_etc.Message.*;
 
 @RestController
 @RequestMapping("/ots")
+@Tag(name = "Ots resource")
 public class OtsController {
     private final OtsService otsService;
     private final AccountService accountService;
@@ -42,9 +45,10 @@ public class OtsController {
         this.responseGenerator = responseGenerator;
     }
 
-    @Operation(summary = "creating an Ots")
+    @ApiResponse(responseCode = "200", description = "returns DTO Ots")
+    @Operation(summary = "creating an Ots", description = "") // todo описание
     @PostMapping()
-    public ResponseEntity<OtsShortDto> create(@RequestBody IcOts icOts, Authentication authentication) {
+    public ResponseEntity<OtsShortDto> create(@RequestBody IcOts icOts, Authentication authentication) { // todo сделать валидацию!
         String usernameActor = authentication.getName();
         Account account = accountService.checkAccount(usernameActor); // todo check OR get?
         OtsShortDto otsShortDto = otsService.create(icOts, account);
