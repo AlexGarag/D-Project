@@ -1,6 +1,5 @@
 package by.tms.d_project.entity;
 
-//import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +20,7 @@ public class Ots { // Ots - one-time solution
     private String titlePrinting;
     @Column(name = "shaftType", nullable = false)
     private int shaftType;
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true/*, fetch = FetchType.LAZY*/)
-//    @JsonManagedReference
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FormOts> formsOts = new ArrayList<>();
     @ManyToOne
     private Account author;
