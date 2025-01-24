@@ -10,12 +10,14 @@ import by.tms.d_project.utils.ResponseGenerator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -48,7 +50,10 @@ public class OtsController {
     @ApiResponse(responseCode = "200", description = "returns DTO Ots")
     @Operation(summary = "creating an Ots", description = "") // todo описание
     @PostMapping()
-    public ResponseEntity<OtsShortDto> create(@RequestBody IcOts icOts, Authentication authentication) { // todo сделать валидацию!
+    public ResponseEntity<?> create(@Valid @RequestBody IcOts icOts, Authentication authentication, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return responseGenerator.replay(-1); // todo развернуть валидацию
+        }
         String usernameActor = authentication.getName();
         Account account = accountService.checkAccount(usernameActor); // todo check OR get?
         OtsShortDto otsShortDto = otsService.create(icOts, account);
