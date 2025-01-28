@@ -20,7 +20,7 @@ public class SolverOts {
     public Ots makeOts(IcOts icOts) {    // todo добавить верификации заданных параметров
         Ots ots = new Ots();
         ots.setTitlePrinting(icOts.getTitlePrinting());
-        ots.setShaftType(icOts.getTypeShaft());
+        ots.setShaftSize(icOts.getShaftSize());
         ots.setAuthor(icOts.getAuthor());
         int widthShapesShaft = 0;
         for (FormIcOts formIcOts : icOts.getFormsIcOts()) {

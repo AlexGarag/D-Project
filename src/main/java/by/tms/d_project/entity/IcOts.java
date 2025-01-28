@@ -1,15 +1,15 @@
 package by.tms.d_project.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static by.tms.d_project.constant_reference_etc.Constant.*;
 
 @Entity
 @Setter
@@ -21,11 +21,10 @@ public class IcOts { // Ic - initial conditions + Ots - one-time solution
     private Long id;
     @Column(name = "title_printing", nullable = false)
     private String titlePrinting;
-    @NotBlank
-    @NotEmpty
-    @NotNull
-    @Column(name = "type_shaft", nullable = false)
-    private int typeShaft;
+    @Min(value = MIN_SHAFT_SIZE)
+    @Max(value = MAX_SHAFT_SIZE)
+    @Column(name = "shaft_size", nullable = false)
+    private int shaftSize;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<FormIcOts> formsIcOts = new ArrayList<>();
     @ManyToOne

@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class OtsShortDto {
     private String titlePrinting;
-    private int shaftType;
+    private int shaftSize;
     private List<FormDto> formsDto = new ArrayList<>();
     private String author;
 }

@@ -1,6 +1,5 @@
 package by.tms.d_project.configuration;
 
-
 import by.tms.d_project.service.AccountService;
 import by.tms.d_project.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -28,7 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;

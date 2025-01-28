@@ -17,7 +17,7 @@ class SolverOtsTest {
         String jsonIcOts =
                 "{\n" +
                 "    \"titlePrinting\": \"34971t\",\n" +
-                "    \"typeShaft\": 500,\n" +
+                "    \"shaftSize\": 500,\n" +
                 "    \"formsIcOts\": [\n" +
                 "        { \n" +
                 "            \"titleForm\": \"probe2\",\n" +
@@ -40,7 +40,7 @@ class SolverOtsTest {
                 "{\n" +
                         "    \"id\": 0,\n" +
                         "    \"titlePrinting\": \"34971t\",\n" +
-                        "    \"typeShaft\": 500,\n" +
+                        "    \"shaftSize\": 500,\n" +
                         "    \"formsOts\": [\n" +
                         "        {\n" +
                         "            \"id\": null,\n" +

@@ -19,20 +19,15 @@ public class FormIcOts {
     private Long id;
     @Column(name = "title_form")
     private String titleForm;
-    @Min(value = MIN_WIDTH)
-    @Max(value = MAX_WIDTH)
     @Column(name = "quantity_imprint")
     private int quantityImprint;
-    @NotNull
     @Min(value = MIN_WIDTH)
     @Max(value = MAX_WIDTH)
     private int width;
-    @NotNull
     @Min(value = MIN_MARGIN)
     @Max(value = MAX_WIDTH)
     @Column(name = "right_margin")
     private int rightMargin;
-    @NotNull
     @Min(value = MIN_INTERVAL)
     @Max(value = MAX_WIDTH)
     @Column(name = "interval_labels")
