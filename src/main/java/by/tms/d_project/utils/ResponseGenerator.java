@@ -1,16 +1,27 @@
 package by.tms.d_project.utils;
 
 import by.tms.d_project.model.Response;
+import org.springdoc.core.service.GenericResponseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static by.tms.d_project.constant_reference_etc.HttpCode.*;
 import static by.tms.d_project.constant_reference_etc.Message.*;
 
 @Component
 public class ResponseGenerator {
+
+    private final GenericResponseService responseBuilder;
+
+    public ResponseGenerator(GenericResponseService responseBuilder) {
+        this.responseBuilder = responseBuilder;
+    }
 
     public ResponseEntity<?> replay(int code) {
         Response response = new Response();
@@ -31,18 +42,19 @@ public class ResponseGenerator {
     }
 
     public ResponseEntity<?> error(BindingResult bindingResult) {
-        Response response = new Response();
-        String errorMessage = bindingResult.getAllErrors().getFirst().getObjectName();
-        if (errorMessage.contains("account")) {
-            response.setCode(BAD_REQUEST_CODE);
-            response.setMessage(BAD_ACCOUNT_MESSAGE);
-        } else if (errorMessage.contains("icOts")) {
-            response.setCode(BAD_REQUEST_CODE);
-            response.setMessage(BAD_IC_MESSAGE);
-        } else {
-            response.setCode(BAD_REQUEST_CODE);
-            response.setMessage(BAD_REQUEST_MESSAGE);
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        List<String> errorsMessages = new ArrayList<>();
+        for (FieldError fieldError : fieldErrors) {
+            switch (fieldError.getField()) {
+                case "username" -> errorsMessages.add(BAD_USERNAME_MESSAGE);
+                case "password" -> errorsMessages.add(BAD_PASSWORD_MESSAGE);
+                case "shaftSize" -> errorsMessages.add(BAD_SHAFT_SIZE_MESSAGE);
+                default -> errorsMessages.add(BAD_REQUEST_MESSAGE);
+            }
         }
+        Response response = new Response();
+        response.setCode(BAD_REQUEST_CODE);
+        response.setMessage(errorsMessages.toString());
         return ResponseEntity.status(BAD_REQUEST_CODE).body(response);
     }
 }

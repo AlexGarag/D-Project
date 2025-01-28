@@ -23,7 +23,6 @@ public class IcOts {
     private String titlePrinting;
     @Min(MIN_SHAFT_SIZE)
     @Max(MAX_SHAFT_SIZE)
-//    @Pattern(regexp = "^\\d+$")
     @Column(name = "shaft_size")
     private int shaftSize;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
