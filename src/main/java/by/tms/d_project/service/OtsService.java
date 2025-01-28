@@ -78,17 +78,17 @@ public class OtsService {
     }
 
     // todo   продолжить!
-    public OtsShortDto find(String titlePrinting, String usernameActor) {
-        OtsShortDto otsShortDto = new OtsShortDto();
-
-
-        return otsShortDto;
-    }
+//    public OtsShortDto find(String titlePrinting, String usernameActor) {
+//        OtsShortDto otsShortDto = new OtsShortDto();
+//
+//
+//        return otsShortDto;
+//    }
 
     private OtsShortDto makeOtsDto(Ots ots) {
         OtsShortDto otsShortDto = new OtsShortDto();
         otsShortDto.setTitlePrinting(ots.getTitlePrinting());
-        otsShortDto.setShaftType(ots.getShaftType());
+        otsShortDto.setShaftSize(ots.getShaftSize());
         otsShortDto.setAuthor(ots.getAuthor().getUsername());
         for (FormOts formOts : ots.getFormsOts()) {
             FormDto formDto = makeFormDto(formOts);

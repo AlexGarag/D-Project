@@ -1,10 +1,9 @@
 package by.tms.d_project.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.Date;
 
@@ -16,8 +15,10 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = 0L;
+    @Pattern(regexp = "^[a-z0-9_-]{3,32}$")
     @Column(unique = true, nullable = false)
     private String username;
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{3,}$")
     @Column(nullable = false)
     private String password;
     @Temporal(TemporalType.TIMESTAMP)

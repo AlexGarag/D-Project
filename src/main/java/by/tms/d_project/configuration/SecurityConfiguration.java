@@ -1,6 +1,5 @@
 package by.tms.d_project.configuration;
 
-
 import by.tms.d_project.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,7 +25,9 @@ public class SecurityConfiguration {
     private final AccountService accountService;
     private final ObjectMapper objectMapper;
 
-    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, AccountService accountService, ObjectMapper objectMapper) {
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter,
+                                 AccountService accountService,
+                                 ObjectMapper objectMapper) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.accountService = accountService;
         this.objectMapper = objectMapper;

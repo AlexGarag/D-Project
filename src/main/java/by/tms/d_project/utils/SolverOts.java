@@ -6,21 +6,19 @@ import by.tms.d_project.entity.IcOts;
 import by.tms.d_project.entity.Ots;
 import org.springframework.stereotype.Component;
 
-import static by.tms.d_project.constant_and_reference.Constant.LENGTH_SHAFT;
+import static by.tms.d_project.constant_reference_etc.Constant.LENGTH_SHAFT;
 
 /**
- * Класс создаёт "Разовое решение" на вал по параметрам, заданным в ShaftIcOts
+ * Класс делает "Разовое решение" начальным условиям, заданным в IcOts
  * Ots - one-time solution
  */
 @Component
 public class SolverOts {
-//    private int widthShapesShaft;
-//    private int margin;
 
-    public Ots makeOts(IcOts icOts) {    // todo добавить верификации заданных параметров
+    public Ots makeOts(IcOts icOts) {
         Ots ots = new Ots();
         ots.setTitlePrinting(icOts.getTitlePrinting());
-        ots.setShaftType(icOts.getTypeShaft());
+        ots.setShaftSize(icOts.getShaftSize());
         ots.setAuthor(icOts.getAuthor());
         int widthShapesShaft = 0;
         for (FormIcOts formIcOts : icOts.getFormsIcOts()) {

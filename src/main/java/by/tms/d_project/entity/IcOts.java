@@ -1,6 +1,7 @@
 package by.tms.d_project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,10 +23,11 @@ public class IcOts {
     private Long id;
     @Column(name = "title_printing", nullable = false)
     private String titlePrinting;
-    @Column(name = "type_shaft", nullable = false)
-    private int typeShaft;
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL/*, fetch = FetchType.LAZY*/)
-//    @JsonManagedReference
+    @Min(MIN_SHAFT_SIZE)
+    @Max(MAX_SHAFT_SIZE)
+    @Column(name = "shaft_size")
+    private int shaftSize;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<FormIcOts> formsIcOts = new ArrayList<>();
     @ManyToOne
     private Account author;

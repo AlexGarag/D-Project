@@ -1,10 +1,12 @@
 package by.tms.d_project.entity;
 
-//import com.fasterxml.jackson.annotation.JsonBackReference;
-//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
+
+import static by.tms.d_project.constant_reference_etc.Constant.*;
 
 @Entity
 @Setter
@@ -18,16 +20,17 @@ public class FormIcOts {
     private String titleForm;
     @Column(name = "quantity_imprint")
     private int quantityImprint;
+    @Min(value = MIN_WIDTH)
+    @Max(value = MAX_WIDTH)
     private int width;
+    @Min(value = MIN_MARGIN)
+    @Max(value = MAX_WIDTH)
     @Column(name = "right_margin")
     private int rightMargin;
+    @Min(value = MIN_INTERVAL)
+    @Max(value = MAX_WIDTH)
     @Column(name = "interval_labels")
     private int intervalLabels;
-
-    //    @ManyToOne
-//    @JsonIgnoreProperties("formsIcOts")
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "owner_id", nullable = false)
-//    @JsonBackReference
     private IcOts owner;
 }
