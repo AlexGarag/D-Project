@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static by.tms.d_project.constant_reference_etc.Constant.MAX_SHAFT_SIZE;
+import static by.tms.d_project.constant_reference_etc.Constant.MIN_SHAFT_SIZE;
+
 /**
  * Сущность хранит начальные условия (IC - initial conditions) для выработки
  * разового решения (OTS - one-time solution)
