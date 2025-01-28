@@ -6,4 +6,6 @@ public class Message {
     public static final String DELETED_MESSAGE = "deleted";
     public static final String BAD_REQUEST_MESSAGE = "bad request";
     public static final String BAD_ACCOUNT_MESSAGE = "the name (password) do not meet the requirements";
+    public static final String BAD_SHAFT_SIZE_MESSAGE = "invalid shaft size is specified";
+    public static final String BAD_IC_MESSAGE = "invalid initial conditions are specified";
 }

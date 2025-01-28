@@ -32,9 +32,16 @@ public class ResponseGenerator {
 
     public ResponseEntity<?> error(BindingResult bindingResult) {
         Response response = new Response();
-        if (bindingResult.getAllErrors().getFirst().getObjectName().contains("account")) {
+        String errorMessage = bindingResult.getAllErrors().getFirst().getObjectName();
+        if (errorMessage.contains("account")) {
             response.setCode(BAD_REQUEST_CODE);
             response.setMessage(BAD_ACCOUNT_MESSAGE);
+        } else if (errorMessage.contains("icOts")) {
+            response.setCode(BAD_REQUEST_CODE);
+            response.setMessage(BAD_IC_MESSAGE);
+        } else {
+            response.setCode(BAD_REQUEST_CODE);
+            response.setMessage(BAD_REQUEST_MESSAGE);
         }
         return ResponseEntity.status(BAD_REQUEST_CODE).body(response);
     }

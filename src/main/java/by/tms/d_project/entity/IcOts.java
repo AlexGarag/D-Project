@@ -15,16 +15,16 @@ import static by.tms.d_project.constant_reference_etc.Constant.*;
 @Setter
 @Getter
 @Table(name = "ic_ots")
-public class IcOts { // Ic - initial conditions + Ots - one-time solution
+public class IcOts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title_printing", nullable = false)
     private String titlePrinting;
-    @Min(value = MIN_SHAFT_SIZE)
-    @Max(value = MAX_SHAFT_SIZE)
-    @Pattern(regexp = "^\\d+$")
-    @Column(name = "shaft_size", nullable = false)
+    @Min(MIN_SHAFT_SIZE)
+    @Max(MAX_SHAFT_SIZE)
+//    @Pattern(regexp = "^\\d+$")
+    @Column(name = "shaft_size")
     private int shaftSize;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<FormIcOts> formsIcOts = new ArrayList<>();

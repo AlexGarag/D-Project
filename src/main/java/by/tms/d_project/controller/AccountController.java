@@ -3,7 +3,6 @@ package by.tms.d_project.controller;
 import by.tms.d_project.dto.AccountDto;
 import by.tms.d_project.dto.AccountShortDto;
 import by.tms.d_project.entity.Account;
-import by.tms.d_project.model.Response;
 import by.tms.d_project.service.AccountService;
 import by.tms.d_project.utils.CheckerRights;
 import by.tms.d_project.utils.ResponseGenerator;
