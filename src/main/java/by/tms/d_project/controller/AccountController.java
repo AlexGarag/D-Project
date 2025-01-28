@@ -47,7 +47,7 @@ public class AccountController {
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody Account account, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return responseGenerator.replay(-1); // todo развернуть валидацию
+            return responseGenerator.error(bindingResult);
         }
         accountService.create(account);
         AccountShortDto accountShortDto = new AccountShortDto();

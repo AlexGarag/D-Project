@@ -50,7 +50,7 @@ public class OtsController {
     @ApiResponse(responseCode = "200", description = "returns DTO Ots")
     @Operation(summary = "creating an Ots", description = "initial conditions (IC) are set for obtaining a one-time solution (Ots)")
     @PostMapping()
-    public ResponseEntity<?> create(@Valid @RequestBody IcOts icOts, Authentication authentication, BindingResult bindingResult) {
+    public ResponseEntity<?> create(/*@Valid*/ @RequestBody IcOts icOts, Authentication authentication, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return responseGenerator.replay(-1); // todo развернуть валидацию
         }

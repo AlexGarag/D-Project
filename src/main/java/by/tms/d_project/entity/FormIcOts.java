@@ -3,7 +3,7 @@ package by.tms.d_project.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,13 +23,16 @@ public class FormIcOts {
     private int quantityImprint;
     @Min(value = MIN_WIDTH)
     @Max(value = MAX_WIDTH)
+    @Pattern(regexp = "^\\d+$")
     private int width;
     @Min(value = MIN_MARGIN)
     @Max(value = MAX_WIDTH)
+    @Pattern(regexp = "^\\d+$")
     @Column(name = "right_margin")
     private int rightMargin;
     @Min(value = MIN_INTERVAL)
     @Max(value = MAX_WIDTH)
+    @Pattern(regexp = "^\\d+$")
     @Column(name = "interval_labels")
     private int intervalLabels;
     @ManyToOne(fetch = FetchType.LAZY)

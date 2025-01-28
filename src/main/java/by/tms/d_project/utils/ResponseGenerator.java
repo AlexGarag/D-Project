@@ -4,6 +4,7 @@ import by.tms.d_project.model.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 
 import static by.tms.d_project.constant_reference_etc.HttpCode.*;
 import static by.tms.d_project.constant_reference_etc.Message.*;
@@ -27,5 +28,14 @@ public class ResponseGenerator {
                 response.setMessage(BAD_REQUEST_MESSAGE);
                 return ResponseEntity.status(BAD_REQUEST_CODE).body(response);
         }
+    }
+
+    public ResponseEntity<?> error(BindingResult bindingResult) {
+        Response response = new Response();
+        if (bindingResult.getAllErrors().getFirst().getObjectName().contains("account")) {
+            response.setCode(BAD_REQUEST_CODE);
+            response.setMessage(BAD_ACCOUNT_MESSAGE);
+        }
+        return ResponseEntity.status(BAD_REQUEST_CODE).body(response);
     }
 }
