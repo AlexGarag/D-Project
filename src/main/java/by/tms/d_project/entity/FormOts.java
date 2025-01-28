@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "forms_ots")
-public class FormOts {  // todo добавить зуб
+public class FormOts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

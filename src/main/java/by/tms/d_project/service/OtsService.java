@@ -78,12 +78,12 @@ public class OtsService {
     }
 
     // todo   продолжить!
-    public OtsShortDto find(String titlePrinting, String usernameActor) {
-        OtsShortDto otsShortDto = new OtsShortDto();
-
-
-        return otsShortDto;
-    }
+//    public OtsShortDto find(String titlePrinting, String usernameActor) {
+//        OtsShortDto otsShortDto = new OtsShortDto();
+//
+//
+//        return otsShortDto;
+//    }
 
     private OtsShortDto makeOtsDto(Ots ots) {
         OtsShortDto otsShortDto = new OtsShortDto();
