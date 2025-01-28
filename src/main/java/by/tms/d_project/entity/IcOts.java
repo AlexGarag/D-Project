@@ -1,6 +1,5 @@
 package by.tms.d_project.entity;
 
-//import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,11 +8,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Сущность хранит начальные условия (IC - initial conditions) для выработки
+ * разового решения (OTS - one-time solution)
+ */
 @Entity
 @Setter
 @Getter
 @Table(name = "ic_ots")
-public class IcOts { // Ic - initial conditions + Ots - one-time solution
+public class IcOts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
