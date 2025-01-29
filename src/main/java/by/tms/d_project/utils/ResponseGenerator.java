@@ -1,6 +1,6 @@
 package by.tms.d_project.utils;
 
-import by.tms.d_project.model.Response;
+import by.tms.d_project.dto.Response;
 import org.springdoc.core.service.GenericResponseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
