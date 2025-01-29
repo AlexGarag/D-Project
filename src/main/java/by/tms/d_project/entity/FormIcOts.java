@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import static by.tms.d_project.constant_reference_etc.Constant.*;
 
+/**
+ * Сущность хранит начальные условия, касающиеся непосредственно печатных форм
+ */
 @Entity
 @Setter
 @Getter

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Сущность хранит ту часть Разового рещения, что касающется непосредственно печатных форм
+ */
 @Entity
 @Getter
 @Setter

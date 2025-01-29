@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Сущность хранит сформированное разовое решение (OTS - one-time solution)
+ */
 @Entity
 @Getter
 @Setter
