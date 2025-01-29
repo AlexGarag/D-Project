@@ -19,4 +19,16 @@ public class HttpCode {
     public static final int FORBIDDEN_CODE = 403;
     public static final int NOT_FOUND_CODE = 404;
     public static final int METHOD_NOT_ALLOWED_CODE = 405;
+    public static final int NOT_ACCEPTABLE_CODE = 406;
+    public static final int PROXY_AUTHENTICATION_REQUIRED_CODE = 407;
+    public static final int REQUEST_TIMEOUT = 408;
+    public static final int CONFLICT = 409;
+    public static final int GONE = 410;
+    public static final int LENGTH_REQUIRED_CODE = 411;
+    public static final int PRECONDITION_FAILED_CODE = 412;
+    public static final int INTERNAL_SERVER_ERROR_CODE = 500;
+    public static final int REQUEST_URI_TOO_LONG = 501;
+    public static final int UNSUPPORTED_MEDIA_TYPE = 502;
+
+
 }

@@ -52,7 +52,7 @@ public class OtsController {
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody @Valid IcOts icOts, BindingResult bindingResult, Authentication authentication) {
         if (bindingResult.hasErrors()) {
-            return responseGenerator.error(bindingResult);
+            return responseGenerator.errorReplay(bindingResult);
         }
         String usernameActor = authentication.getName();
         Account account = accountService.checkAccount(usernameActor);
@@ -68,7 +68,7 @@ public class OtsController {
         if (otsShortDtoOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(otsShortDtoOptional.get());
         } else {
-            return responseGenerator.replay(NOT_FOUND_CODE);
+            return responseGenerator.errorReplay(NOT_FOUND_CODE);
         }
     }
 
@@ -86,10 +86,10 @@ public class OtsController {
                 return ResponseEntity.status(HttpStatus.OK).body(DELETED_MESSAGE);
             } else {
             log.info("There was an attempt to delete the account \'{}\' by \'{}\'", usernameActor, authentication.getName());
-                return responseGenerator.replay(FORBIDDEN_CODE);
+                return responseGenerator.errorReplay(FORBIDDEN_CODE);
             }
         } else {
-            return responseGenerator.replay(NOT_FOUND_CODE);
+            return responseGenerator.errorReplay(NOT_FOUND_CODE);
         }
     }
 }
