@@ -8,5 +8,5 @@ public class Message {
     public static final String BAD_PASSWORD_MESSAGE = "the password do not meet the requirements";
     public static final String BAD_USERNAME_MESSAGE = "the name do not meet the requirements";
     public static final String BAD_SHAFT_SIZE_MESSAGE = "invalid shaft size is specified";
-//    public static final String BAD_IC_MESSAGE = "invalid initial conditions are specified";
+    public static final String INTERNAL_SERVER_ERROR_MESSAGE = "internal server error";
 }

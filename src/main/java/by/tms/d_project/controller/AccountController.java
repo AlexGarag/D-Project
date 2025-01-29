@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static by.tms.d_project.constant_reference_etc.HttpCode.FORBIDDEN_CODE;
-import static by.tms.d_project.constant_reference_etc.HttpCode.NOT_FOUND_CODE;
+import static by.tms.d_project.constant_reference_etc.HttpCode.*;
 import static by.tms.d_project.constant_reference_etc.Message.*;
 
 @RestController
@@ -46,26 +45,24 @@ public class AccountController {
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody Account account, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return responseGenerator.error(bindingResult);
+            return responseGenerator.errorReplay(bindingResult);
         }
-        accountService.create(account);
-        AccountShortDto accountShortDto = new AccountShortDto();
-        accountShortDto.setUsername(account.getUsername());
-        return new ResponseEntity<>(accountShortDto, HttpStatus.CREATED);
+        Optional<AccountShortDto> accountShortDtoOptional = accountService.create(account);
+        if (accountShortDtoOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(accountShortDtoOptional.get());
+        } else {
+            return responseGenerator.errorReplay(INTERNAL_SERVER_ERROR_CODE);
+        }
     }
 
     @Operation(summary = "getting an account")
     @GetMapping("/{username}")
     public ResponseEntity<?> get(@PathVariable("username") String username) {
-        Optional<Account> optionalAccount = accountService.getAccountByUsername(username);
-        if (optionalAccount.isPresent()) {
-            Account account = optionalAccount.get();
-            AccountDto accountDto = new AccountDto();
-            accountDto.setId(account.getId());
-            accountDto.setUsername(account.getUsername());
-            return ResponseEntity.status(HttpStatus.OK).body(accountDto);
+        Optional<AccountDto> accountDtoOptional = accountService.getAccountDtoByUsername(username);
+        if (accountDtoOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(accountDtoOptional.get());
         } else {
-            return responseGenerator.replay(NOT_FOUND_CODE);
+            return responseGenerator.errorReplay(NOT_FOUND_CODE);
         }
     }
 
@@ -79,14 +76,19 @@ public class AccountController {
             Optional<Account> optionalAccount = accountService.getAccountByUsername(username);
             if (optionalAccount.isPresent()) {
                 Account oldAccount = optionalAccount.get();
-                AccountShortDto accountShortDto = accountService.update(oldAccount, newAccount);
-                return ResponseEntity.status(HttpStatus.OK).body(accountShortDto);
+                Optional<AccountShortDto> accountShortDtoOptional = accountService.update(oldAccount, newAccount);
+                if (accountShortDtoOptional.isPresent()) {
+                    return ResponseEntity.status(HttpStatus.CREATED).body(accountShortDtoOptional.get());
+                }
+                else {
+                    return responseGenerator.errorReplay(INTERNAL_SERVER_ERROR_CODE);
+                }
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(NOT_FOUND_MESSAGE);
             }
         } else {
             log.info("There was an attempt to edit the account \'{}\' by \'{}\'", username, authentication.getName());
-            return responseGenerator.replay(FORBIDDEN_CODE);
+            return responseGenerator.errorReplay(FORBIDDEN_CODE);
         }
     }
 
@@ -99,7 +101,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.OK).body(DELETED_MESSAGE);
         } else {
             log.info("There was an attempt to delete the account \'{}\' by \'{}\'", username, authentication.getName());
-            return responseGenerator.replay(FORBIDDEN_CODE);
+            return responseGenerator.errorReplay(FORBIDDEN_CODE);
         }
     }
 }
