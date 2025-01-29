@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import static by.tms.d_project.constant_reference_etc.Constant.LENGTH_SHAFT;
 
 /**
- * Класс делает "Разовое решение" начальным условиям, заданным в IcOts
- * Ots - one-time solution
+ * Класс формирует "Разовое решение" (Ots - one-time solution)
+ * по начальным условиям, заданным в IcOts *
  */
 @Component
 public class SolverOts {

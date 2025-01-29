@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+/**
+ * Класс описывает процедуру проверки прав на форирование, редактирование и удаление
+ * Разового решения
+ */
 @Component
 public class CheckerRights {
 
@@ -15,10 +19,6 @@ public class CheckerRights {
                                 .toArray(GrantedAuthority[]::new))
                         .split(","))
                 .anyMatch(role -> role.contains("ROLE_ADMIN"));
-        if (actorUsername.equals(author) || isAdmin) {
-            return true;
-        } else {
-            return false;
-        }
+        return actorUsername.equals(author) || isAdmin;
     }
 }

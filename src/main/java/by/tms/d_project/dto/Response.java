@@ -1,4 +1,4 @@
-package by.tms.d_project.model;
+package by.tms.d_project.dto;
 
 import lombok.Getter;
 import lombok.Setter;

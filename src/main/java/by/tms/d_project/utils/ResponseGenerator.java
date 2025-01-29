@@ -1,6 +1,7 @@
 package by.tms.d_project.utils;
 
-import by.tms.d_project.model.Response;
+import by.tms.d_project.dto.Response;
+import org.springdoc.core.service.GenericResponseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,11 +17,7 @@ import static by.tms.d_project.constant_reference_etc.Message.*;
 @Component
 public class ResponseGenerator {
 
-//    private final GenericResponseService responseBuilder;
-//
-//    public ResponseGenerator(GenericResponseService responseBuilder) {
-//        this.responseBuilder = responseBuilder;
-//    }
+    private final GenericResponseService responseBuilder;
 
     public ResponseEntity<?> errorReplay(int code) {
         Response response = new Response();
