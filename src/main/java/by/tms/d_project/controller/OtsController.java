@@ -1,6 +1,7 @@
 package by.tms.d_project.controller;
 
-import by.tms.d_project.dto.OtsShortDto;
+import by.tms.d_project.dto.AccountShortDto;
+import by.tms.d_project.dto.OtsDto;
 import by.tms.d_project.entity.Account;
 import by.tms.d_project.entity.IcOts;
 import by.tms.d_project.service.AccountService;
@@ -56,15 +57,15 @@ public class OtsController {
         }
         String usernameActor = authentication.getName();
         Account account = accountService.checkAccount(usernameActor);
-        OtsShortDto otsShortDto = otsService.create(icOts, account);
-        return ResponseEntity.status(HttpStatus.CREATED).body(otsShortDto);
+        OtsDto otsDto = otsService.create(icOts, account);
+        return ResponseEntity.status(HttpStatus.CREATED).body(otsDto);
     }
 
     @Operation(summary = "getting an Ots")
     @GetMapping("/{titlePrinting}")
     public ResponseEntity<?> get(@PathVariable("titlePrinting") String titlePrinting, Authentication authentication) {
         String usernameActor = authentication.getName();
-        Optional<OtsShortDto> otsShortDtoOptional = otsService.get(titlePrinting, usernameActor);
+        Optional<OtsDto> otsShortDtoOptional = otsService.get(titlePrinting, usernameActor);
         if (otsShortDtoOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(otsShortDtoOptional.get());
         } else {
@@ -76,11 +77,10 @@ public class OtsController {
     @DeleteMapping("/{titlePrinting}")
     public ResponseEntity<?> deleteByUsername(@PathVariable("titlePrinting") String titlePrinting, Authentication authentication) {
         String usernameActor = authentication.getName();
-        Optional<OtsShortDto> otsShortDtoOptional = otsService.get(titlePrinting, usernameActor);
-        String author = null;
-        if (otsShortDtoOptional.isPresent()) {
-            author = otsShortDtoOptional.get().getAuthor();
-            boolean isRights = checkerRights.checkRights(author, authentication);
+        Optional<OtsDto> otsDtoOptional = otsService.get(titlePrinting, usernameActor);
+        if (otsDtoOptional.isPresent()) {
+            AccountShortDto author = otsDtoOptional.get().getAuthor();
+            boolean isRights = checkerRights.checkRights(author.username(), authentication);
             if (isRights) {
                 otsService.delete(titlePrinting, authentication.getName());
                 return ResponseEntity.status(HttpStatus.OK).body(DELETED_MESSAGE);

@@ -3,8 +3,10 @@ package by.tms.d_project.service;
 import by.tms.d_project.dao.IcOtsDao;
 import by.tms.d_project.dao.OtsDao;
 import by.tms.d_project.dto.FormDto;
-import by.tms.d_project.dto.OtsShortDto;
+import by.tms.d_project.dto.OtsDto;
 import by.tms.d_project.entity.*;
+import by.tms.d_project.mapper.FormMapper;
+import by.tms.d_project.mapper.OtsMapper;
 import by.tms.d_project.repository.IcOtsRepository;
 import by.tms.d_project.repository.OtsRepository;
 import by.tms.d_project.utils.SolverOts;
@@ -13,12 +15,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OtsService {
     private final IcOtsRepository icOtsRepository;
     private final OtsRepository otsRepository;
+    private final FormMapper formMapper;
+    private final OtsMapper otsMapper;
     private final OtsDao otsDao;
     private final IcOtsDao icOtsDao;
     private final SolverOts solverOts;
@@ -26,23 +32,26 @@ public class OtsService {
 
     public OtsService(IcOtsRepository icOtsRepository,
                       OtsRepository otsRepository,
+                      OtsMapper otsMapper,
+                      FormMapper formMapper,
                       OtsDao otsDao,
                       IcOtsDao icOtsDao,
                       SolverOts solverOts) {
         this.icOtsRepository = icOtsRepository;
         this.otsRepository = otsRepository;
+        this.otsMapper = otsMapper;
+        this.formMapper = formMapper;
         this.otsDao = otsDao;
         this.icOtsDao = icOtsDao;
         this.solverOts = solverOts;
     }
 
     @Transactional
-    public OtsShortDto create(IcOts icOts, Account account) {
+    public OtsDto create(IcOts icOts, Account account) {
         icOts.setAuthor(account);
         icOtsRepository.save(icOts);
         log.info("Creating an Ots for \'{}\' by \'{}\'", icOts.getTitlePrinting(), account.getUsername());
         Ots ots = solverOts.makeOts(icOts);
-        OtsShortDto otsShortDto = makeOtsDto(ots);
         for (FormIcOts formIcOts : icOts.getFormsIcOts()) {
             formIcOts.setOwner(icOts);
         }
@@ -53,17 +62,22 @@ public class OtsService {
         otsRepository.save(ots);
         log.info("A one-time solution was obtained for \'{}\' by \'{}\'", icOts.getTitlePrinting(),
                 ots.getAuthor().getUsername());
-        return otsShortDto;
+        OtsDto otsDto = otsMapper.toDto(ots);
+        List<FormDto> formsDto = new ArrayList<>();
+        for (FormOts formOts : ots.getFormsOts()) {
+            formsDto.add(formMapper.toFormDto(formOts));
+        }
+        otsDto.setFormsDto(formsDto);
+        return otsDto;
     }
 
-    // работает
-    public Optional<OtsShortDto> get(String titlePrinting, String usernameActor) {
+    public Optional<OtsDto> get(String titlePrinting, String usernameActor) {
         Optional<Ots> otsOptional = otsRepository.findByTitlePrinting(titlePrinting);
-        Optional<OtsShortDto> otsShortDtoOptional = Optional.empty();
+        Optional<OtsDto> otsShortDtoOptional = Optional.empty();
         if (otsOptional.isPresent()) {
             Ots ots = otsOptional.get();
-            OtsShortDto otsShortDto = makeOtsDto(otsOptional.get());
-            otsShortDtoOptional = Optional.of(otsShortDto);
+            OtsDto otsDto = otsMapper.toDto(ots);
+            otsShortDtoOptional = Optional.of(otsDto);
             log.info("Ots \'{}\' was given to the actor \'{}\'", ots.getTitlePrinting(), usernameActor);
         }
         return otsShortDtoOptional;
@@ -75,35 +89,5 @@ public class OtsService {
         Optional<IcOts> icOtsOptional = icOtsRepository.findByTitlePrinting(titlePrinting); // удаляю НУ к Разовому Решению
         icOtsOptional.ifPresent(icOts -> icOtsDao.delete(icOts.getId()));
         log.info("Deleting an Ots \'{}\' by \'{}\'", titlePrinting, actorUsername);
-    }
-
-    // todo   продолжить!
-//    public OtsShortDto find(String titlePrinting, String usernameActor) {
-//        OtsShortDto otsShortDto = new OtsShortDto();
-//
-//
-//        return otsShortDto;
-//    }
-
-    private OtsShortDto makeOtsDto(Ots ots) {
-        OtsShortDto otsShortDto = new OtsShortDto();
-        otsShortDto.setTitlePrinting(ots.getTitlePrinting());
-        otsShortDto.setShaftSize(ots.getShaftSize());
-        otsShortDto.setAuthor(ots.getAuthor().getUsername());
-        for (FormOts formOts : ots.getFormsOts()) {
-            FormDto formDto = makeFormDto(formOts);
-            otsShortDto.getFormsDto().add(formDto);
-        }
-        return otsShortDto;
-    }
-
-    private FormDto makeFormDto(FormOts formOts) {
-        FormDto formDto = new FormDto();
-        formDto.setNumberOnShaft(formOts.getNumberOnShaft());
-        formDto.setTitleForm(formOts.getTitleForm());
-        formDto.setIndentationOnShaft(formOts.getIndentationOnShaft());
-        formDto.setIntervalLabels(formOts.getIntervalLabels());
-        formDto.setToothOnShaft(formOts.getToothOnShaft());
-        return formDto;
     }
 }

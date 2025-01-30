@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class OtsShortDto {
+public class OtsDto {
     private String titlePrinting;
     private int shaftSize;
     private List<FormDto> formsDto = new ArrayList<>();
-    private String author;
+    private AccountShortDto author;
 }
+
