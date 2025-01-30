@@ -21,7 +21,7 @@ public class Ots { // Ots - one-time solution
     private Long id = 0L;
     @Column(name = "title_printing", nullable = false)
     private String titlePrinting;
-    @Column(name = "shaftSize", nullable = false)
+    @Column(name = "shaft_size", nullable = false)
     private int shaftSize;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FormOts> formsOts = new ArrayList<>();
