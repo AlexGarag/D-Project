@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,9 +63,6 @@ public class OtsService {
                 ots.getAuthor().getUsername());
         OtsDto otsDto = otsMapper.toDto(ots);
         List<FormDto> formsDto = formMapper.toFormDtoList(ots.getFormsOts());
-//        for (FormOts formOts : ots.getFormsOts()) {
-//            formsDto.add(formMapper.toFormDto(formOts));
-//        }
         otsDto.setFormsDto(formsDto);
         return Optional.of(otsDto);
     }
