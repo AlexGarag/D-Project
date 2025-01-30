@@ -47,7 +47,7 @@ public class OtsService {
     }
 
     @Transactional
-    public OtsDto create(IcOts icOts, Account account) {
+    public Optional<OtsDto> create(IcOts icOts, Account account) {
         icOts.setAuthor(account);
         icOtsRepository.save(icOts);
         log.info("Creating an Ots for \'{}\' by \'{}\'", icOts.getTitlePrinting(), account.getUsername());
@@ -63,12 +63,12 @@ public class OtsService {
         log.info("A one-time solution was obtained for \'{}\' by \'{}\'", icOts.getTitlePrinting(),
                 ots.getAuthor().getUsername());
         OtsDto otsDto = otsMapper.toDto(ots);
-        List<FormDto> formsDto = new ArrayList<>();
-        for (FormOts formOts : ots.getFormsOts()) {
-            formsDto.add(formMapper.toFormDto(formOts));
-        }
+        List<FormDto> formsDto = formMapper.toFormDtoList(ots.getFormsOts());
+//        for (FormOts formOts : ots.getFormsOts()) {
+//            formsDto.add(formMapper.toFormDto(formOts));
+//        }
         otsDto.setFormsDto(formsDto);
-        return otsDto;
+        return Optional.of(otsDto);
     }
 
     public Optional<OtsDto> get(String titlePrinting, String usernameActor) {

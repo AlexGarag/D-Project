@@ -23,8 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static by.tms.d_project.constant_reference_etc.HttpCode.FORBIDDEN_CODE;
-import static by.tms.d_project.constant_reference_etc.HttpCode.NOT_FOUND_CODE;
+import static by.tms.d_project.constant_reference_etc.HttpCode.*;
 import static by.tms.d_project.constant_reference_etc.Message.*;
 
 @RestController
@@ -57,8 +56,12 @@ public class OtsController {
         }
         String usernameActor = authentication.getName();
         Account account = accountService.checkAccount(usernameActor);
-        OtsDto otsDto = otsService.create(icOts, account);
-        return ResponseEntity.status(HttpStatus.CREATED).body(otsDto);
+        Optional<OtsDto> otsDtoOptional = otsService.create(icOts, account);
+        if (otsDtoOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(otsDtoOptional.get());
+        } else {
+            return responseGenerator.errorReplay(INTERNAL_SERVER_ERROR_CODE);
+        }
     }
 
     @Operation(summary = "getting an Ots")
