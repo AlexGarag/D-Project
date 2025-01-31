@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface FormMapper {
 
-    FormDto toFormDto(FormOts formOts);
+    FormDto toDto(FormOts formOts);
 
-    List<FormDto> toFormDtoList(List<FormOts> formsOts);
+    List<FormDto> toListDto(List<FormOts> formsOts);
 }

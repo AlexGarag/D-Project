@@ -2,7 +2,6 @@ package by.tms.d_project.service;
 
 import by.tms.d_project.dao.IcOtsDao;
 import by.tms.d_project.dao.OtsDao;
-import by.tms.d_project.dto.FormDto;
 import by.tms.d_project.dto.OtsDto;
 import by.tms.d_project.entity.*;
 import by.tms.d_project.mapper.FormMapper;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,8 +60,6 @@ public class OtsService {
         log.info("A one-time solution was obtained for \'{}\' by \'{}\'", icOts.getTitlePrinting(),
                 ots.getAuthor().getUsername());
         OtsDto otsDto = otsMapper.toDto(ots);
-        List<FormDto> formsDto = formMapper.toFormDtoList(ots.getFormsOts());
-        otsDto.setFormsDto(formsDto);
         return Optional.of(otsDto);
     }
 
