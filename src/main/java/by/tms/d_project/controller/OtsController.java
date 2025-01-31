@@ -82,7 +82,7 @@ public class OtsController {
         String usernameActor = authentication.getName();
         Optional<OtsDto> otsDtoOptional = otsService.get(titlePrinting, usernameActor);
         if (otsDtoOptional.isPresent()) {
-            AccountShortDto author = otsDtoOptional.get().getAuthor();
+            AccountShortDto author = otsDtoOptional.get().author();
             boolean isRights = checkerRights.checkRights(author.username(), authentication);
             if (isRights) {
                 otsService.delete(titlePrinting, authentication.getName());
